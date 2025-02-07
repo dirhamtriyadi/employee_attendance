@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
 const AuthController = () => import('#controllers/auth_controller')
+const AttendancesController = () => import('#controllers/attendances_controller')
 
 // Route default adonis
 router
@@ -31,6 +32,10 @@ router
     // Route group dengan middleware auth
     router
       .group(() => {
+        // Route Attendance
+        router.post('/check-in', [AttendancesController, 'checkIn'])
+        router.post('/check-out', [AttendancesController, 'checkOut'])
+
         // Route check auth
         router.get('/me', async ({ auth, response }) => {
           try {
