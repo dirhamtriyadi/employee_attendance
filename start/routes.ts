@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
+const DashboardController = () => import('#controllers/dashboard_controller')
 const AuthController = () => import('#controllers/auth_controller')
 const AttendancesController = () => import('#controllers/attendances_controller')
 
@@ -32,9 +33,12 @@ router
     // Route group dengan middleware auth
     router
       .group(() => {
+        // Route Dashboard
+        router.get('/dashboard', [DashboardController, 'index'])
+
         // Route Attendance
-        router.post('/check-in', [AttendancesController, 'checkIn'])
-        router.post('/check-out', [AttendancesController, 'checkOut'])
+        router.post('/attendances/check-in', [AttendancesController, 'checkIn'])
+        router.post('/attendances/check-out', [AttendancesController, 'checkOut'])
 
         // Route check auth
         router.get('/me', async ({ auth, response }) => {
