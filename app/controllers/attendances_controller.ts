@@ -15,7 +15,6 @@ export default class AttendancesController {
 
       // Mendapatkan tanggal hari ini dalam format YYYY-MM-DD
       const today = DateTime.local({ zone: 'Asia/Jakarta' }).toISODate()
-      console.log(today)
 
       // Cek apakah user sudah check-in hari ini
       const existingAttendance = await Attendance.query()
