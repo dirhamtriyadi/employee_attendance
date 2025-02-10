@@ -27,6 +27,10 @@ export default class DashboardController {
     // Cek apakah hari ini sudah check in dan check out
     const attendance = await Attendance.query().where('userId', user.id).first()
 
-    response.ok({ work_schedule: workSchedule, attendance: attendance })
+    response.ok({
+      message: 'Data retrieved successfully.',
+      work_schedule: workSchedule,
+      attendance: attendance,
+    })
   }
 }
