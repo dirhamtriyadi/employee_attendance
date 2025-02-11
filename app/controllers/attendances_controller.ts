@@ -44,7 +44,7 @@ export default class AttendancesController {
         isLate: isLate,
       })
 
-      return response.ok({ message: 'Check-in successful', data: attendance })
+      return response.created({ message: 'Check-in successful', data: attendance })
     } catch (error) {
       return response.internalServerError({ message: 'Something went wrong', error })
     }

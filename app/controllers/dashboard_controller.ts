@@ -2,7 +2,7 @@ import WorkSchedule from '#models/work_schedule'
 import Attendance from '#models/attendance'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
-// import { DateTime } from 'luxon'
+import { DateTime } from 'luxon'
 
 export default class DashboardController {
   async index({ auth, response }: HttpContext) {
@@ -20,12 +20,15 @@ export default class DashboardController {
     }
 
     // Mendapatkan tanggal hari ini dalam format YYYY-MM-DD
-    // const today = DateTime.local({ zone: 'Asia/Jakarta' }).toISODate()
+    const today = DateTime.local({ zone: 'Asia/Jakarta' }).toISODate()
 
     // Ambil jam kerja
     const workSchedule = await WorkSchedule.first()
     // Cek apakah hari ini sudah check in dan check out
-    const attendance = await Attendance.query().where('userId', user.id).first()
+    const attendance = await Attendance.query()
+      .where('userId', user.id)
+      .whereRaw('DATE(check_in_time) = ?', [today])
+      .first()
 
     response.ok({
       message: 'Data retrieved successfully.',
